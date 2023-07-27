@@ -1,20 +1,11 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import store from '../store/index'
 import Home from '../views/Home.vue'
-import familySvg from '../views/familySvg.vue'
 // import { miniProgramNavigateTo } from '../utils/Weixin.js'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/Login',
-    name: 'Login',
-    meta: {
-      index: 1
-    },
-    component: () => import('../views/Login.vue')
-  },
-  {
-    path: '/',
+    path: '/:code',
     name: 'Home',
     meta: {
       index: 1
@@ -27,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       index: 2
     },
-    component: familySvg
+    component: () => import('../views/familySvg.vue')
   },
   {
     path: '/search',
@@ -36,31 +27,6 @@ const routes: Array<RouteRecordRaw> = [
       index: 3
     },
     component: () => import('../views/search.vue')
-  },
-  {
-    path: '/articlesList',
-    name: 'articlesList',
-    meta: {
-      index: 2
-    },
-    component: () => import('../views/articlesList.vue')
-  },
-  {
-    path: '/articlesDetail',
-    name: 'articlesDetail',
-    meta: {
-      index: 3
-    },
-    component: () => import('../views/articlesDetail.vue')
-  },
-  {
-    path: '/imgList',
-    name: 'imgList',
-    meta: {
-      index: 2
-    },
-    component: () => import('../views/imgList.vue')
-
   },
   {
     path: '/videoList',
@@ -82,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 const setoRouteTransitionName = (to, from) => {
@@ -99,7 +65,7 @@ const setoRouteTransitionName = (to, from) => {
 }
 
 router.beforeEach((to, from, next) => {
-  const token = window.sessionStorage.getItem('token')
+  // const token = window.sessionStorage.getItem('token')
   setoRouteTransitionName(to, from)
   next()
 })

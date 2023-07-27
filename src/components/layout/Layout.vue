@@ -1,7 +1,6 @@
 <template>
   <div class="layout-cantainer">
-    <!-- <van-nav-bar
-      v-show="!hideBar"
+    <van-nav-bar
       class="vav-bar"
       title="宗信堂"
       left-arrow
@@ -15,7 +14,7 @@
           @click="search"
         />
       </template>
-    </van-nav-bar> -->
+    </van-nav-bar>
     <div :class="['layout-content',hideBar?'hide-bar':'']">
       <slot></slot>
     </div>
