@@ -33,12 +33,15 @@ export const axiosCus = {
 export default {
   axios: (dataSource) => axiosCus[dataSource.method](`${baseUrl}${dataSource.url}`, dataSource.data),
   login: (data) => axiosCus.post(`${baseUrl}/api/user/login`, data),
+  getHomeInfo: (data) => axiosCus.get(`${baseUrl}/api/home/getHomeInfo`, data),
+  getMasterInfo: (data) => axiosCus.get(`${baseUrl}/api/home/getMasterInfo`, data),
+  getMemberTree: (data) => axiosCus.get(`${baseUrl}/api/member/treeList`, data),
+  getMemberList: (data) => axiosCus.get(`${baseUrl}/api/member/list`, data),
+  queryMaxLevel: (data) => axiosCus.get(`${baseUrl}/api/member/getLevel`, data),
+  getMemberDetail: (data) => axiosCus.get(`${baseUrl}/api/member/detail`, data),
+  getMateDetail: (data) => axiosCus.get(`${baseUrl}/api/mate/detail`, data),
+  // =====
 
-  getHomeInfo: (data) => axiosCus.get(`${baseUrl}/api/getHomeInfo`, data),
-  getMemberList: (data) => axiosCus.get(`${baseUrl}/api/member/queryList`, data),
-  queryMaxLevel: (data) => axiosCus.get(`${baseUrl}/api/member/queryMaxLevel`, data),
-  getMemberTree: (data) => axiosCus.get(`${baseUrl}/api/member/queryTree`, data),
-  getMemberDetail: (data) => axiosCus.get(`${baseUrl}/api/member/query`, data),
   getPageDetail: (data) => axiosCus.get(`${baseUrl}/api/page/query`, data),
   getArticlesList: (data) => axiosCus.get(`${baseUrl}/api/articles/queryList`, data),
   getPhptpList: (data) => axiosCus.get(`${baseUrl}/api/resourceType/queryList?dataType=img`, data),

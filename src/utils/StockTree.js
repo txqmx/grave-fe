@@ -88,7 +88,7 @@ export class StockTree {
           return `translate(${e.transform.x},${e.transform.y}) scale(${e.transform.k})`
         })
       })
-    zoom.transform(svg, d3.zoomIdentity.translate(0, 0).scale(0.8))
+    zoom.transform(svg, d3.zoomIdentity.translate(0, 0).scale(1))
     svg.call(
       zoom
     ).on('dblclick.zoom', null)// 取消默认的双击放大事件
@@ -100,7 +100,7 @@ export class StockTree {
     this.gNodes = gAll.append('g').attr('id', 'nodeGroup')
     // 设置好节点之间距离的tree方法
     this.tree = d3.tree().nodeSize([this.config.dx, this.config.dy]).separation((a, b) => {
-      if (a.data.mateInfo || b.data.mateInfo) {
+      if (a.data.mate || b.data.mate) {
         return 1.8
       }
       return 1
@@ -171,7 +171,7 @@ export class StockTree {
         return `translate(${source.x0},${source.y0})`
       })
       .attr('width', (d) => {
-        if (d.data.mateInfo) {
+        if (d.data.mate) {
           return this.config.rectWidth * 2
         }
         return this.config.rectWidth
@@ -184,7 +184,7 @@ export class StockTree {
     node1Enter
       .append('rect')
       .attr('width', (d) => {
-        if (d.data.mateInfo) {
+        if (d.data.mate) {
           return this.config.rectWidth * 2
         }
         return this.config.rectWidth
@@ -193,7 +193,7 @@ export class StockTree {
         return this.config.rectHeight
       })
       .attr('x', (d) => {
-        if (d.data.mateInfo) {
+        if (d.data.mate) {
           return -this.config.rectWidth
         }
         return -this.config.rectWidth / 2
@@ -208,7 +208,7 @@ export class StockTree {
     // 绘制人物块
     // this.drawPerson(node1Enter)
     node1Enter.each(d => {
-      if (d.data.mateInfo) {
+      if (d.data.mate) {
         this.drawPerson(d, 35, 'meta')
         this.drawPerson(d, -35)
       } else {
@@ -373,7 +373,7 @@ export class StockTree {
     p1.append('image')
       .attr('xlink:href', (d) => {
         if (isMeta) {
-          return imgUrlParser(d.data.mateInfo.avatar) || require('@/assets/222.jpeg')
+          return imgUrlParser(d.data.mate.avatar) || require('@/assets/222.jpeg')
         }
         return imgUrlParser(d.data.avatar) || require('@/assets/111.jpeg')
       })
@@ -403,7 +403,7 @@ export class StockTree {
       .attr('class', 'identity-msg')
       .text((d) => {
         if (isMeta) {
-          return d.data.mateInfo.identity
+          return d.data.mate.identity
         }
         return d.data.identity
       })
@@ -413,7 +413,7 @@ export class StockTree {
       .attr('y', 43)
       .text((d) => {
         if (isMeta) {
-          return d.data.mateInfo.name
+          return d.data.mate.name
         }
         return d.data.name
       })

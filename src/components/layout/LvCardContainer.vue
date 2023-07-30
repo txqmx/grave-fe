@@ -2,7 +2,7 @@
   <div class="lv-card-container">
     <div class="lv-card_title">
       <span>{{ title }}</span>
-      <span class="more-btn" @click="entryMore">
+      <span v-if="isMore" class="more-btn" @click="entryMore">
         更多
         <van-icon name="arrow" />
       </span>
@@ -37,6 +37,9 @@ export default defineComponent({
     },
     isExpanded: {
       default: false
+    },
+    isMore: {
+      default: true
     }
   },
   mounted () {
@@ -86,11 +89,11 @@ export default defineComponent({
   }
 
   .lv-card_content {
-    padding: 0 4px;
+    // padding: 10px 4px;
     // margin-bottom: 10px;
     font-size: 14px;
-    color: #969799;
-    line-height: 1.5;
+    color: #6b7166;
+    line-height: 1.8;
     overflow: hidden;
   }
 

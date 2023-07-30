@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import store from '../store/index'
 import Home from '../views/Home.vue'
+import memberTree from '../views/memberTree.vue'
 // import { miniProgramNavigateTo } from '../utils/Weixin.js'
 
 const routes: Array<RouteRecordRaw> = [
@@ -13,12 +14,12 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/familySvg',
-    name: 'familySvg',
+    path: '/:code/memberTree',
+    name: 'memberTree',
     meta: {
       index: 2
     },
-    component: () => import('../views/familySvg.vue')
+    component: memberTree
   },
   {
     path: '/search',

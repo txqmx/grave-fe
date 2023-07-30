@@ -2,7 +2,7 @@
 const viewport = require('postcss-px-to-viewport')
 const autoprefixer = require('autoprefixer')
 module.exports = {
-  publicPath: './',
+  publicPath: '/',
   pages: {
     index: {
       entry: 'src/main.ts',

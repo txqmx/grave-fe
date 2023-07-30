@@ -60,8 +60,8 @@ export default defineComponent({
   }
   .layout-content {
     position: relative;
-    // height: calc(100% - 47px);
-    height: 100%;
+    height: calc(100% - 47px);
+    // height: 100%;
     overflow: hidden;
   }
   .hide-bar{

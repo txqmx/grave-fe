@@ -10,26 +10,27 @@
 import { defineComponent } from 'vue'
 import api from '@/api'
 import { getUrlParam } from '@/utils/Url'
+import GraveMemberView from '@/components/packages/GraveMemberView.vue'
+import GraveEntryView from '@/components/packages/GraveEntryView.vue'
 import GraveImgSwiper from '@/components/packages/GraveImgSwiper.vue'
 import GraveDeatilView from '@/components/packages/GraveDeatilView.vue'
 import { mapMutations } from 'vuex'
 import LvMemberSwiper from '@/components/packages/LvMemberSwiper.vue'
 import LvImgAlbum from '@/components/packages/LvImgAlbum.vue'
 import LvVideoView from '@/components/packages/LvVideoView.vue'
-import GraveMemberView from '@/components/packages/GraveMemberView.vue'
+
 import LvNoticeView from '@/components/packages/LvNoticeView.vue'
 import LvMenu from '@/components/packages/LvMenu.vue'
 export default defineComponent({
-  components: { GraveImgSwiper, GraveDeatilView, LvMemberSwiper, LvImgAlbum, LvVideoView, GraveMemberView, LvNoticeView, LvMenu },
+  components: { GraveMemberView, GraveEntryView, GraveImgSwiper, GraveDeatilView, LvMemberSwiper, LvImgAlbum, LvVideoView, LvNoticeView, LvMenu },
   name: 'Home',
   data () {
     return {
-      code: '',
+      code: this.$route.params.code,
       config: []
     }
   },
   created () {
-    this.code = this.$route.params.code
     this.getHomeInfo()
   },
 

@@ -2,7 +2,7 @@
   <div class="lv-swiper-container">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="(item, index) in imgs" :key="index">
-        <van-image width="100%" height="100%" :src="imgUrlParser(item)"/>
+        <van-image width="100%" height="100%" :src="imgUrlParser(item)" fit="fill"/>
         <!-- <img :src="imgUrlParser(item)" /> -->
       </van-swipe-item>
     </van-swipe>
@@ -40,15 +40,12 @@ export default defineComponent({
 }
 
 .my-swipe {
-  height: 150px;
+  height: 190px;
+  width: 100%;
   .van-swipe-item {
     color: #fff;
     font-size: 20px;
     text-align: center;
-    img {
-      width: 100%;
-      height: 100%;
-    }
   }
 }
 </style>

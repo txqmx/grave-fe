@@ -1,6 +1,6 @@
 <template>
-  <lv-card-container :title="title" @more="entryMore" :isExpanded="true">
-    <div v-html="detail"></div>
+  <lv-card-container :title="title" @more="entryMore" :isExpanded="false" :isMore="false">
+    <div class="html_content" v-html="detail"></div>
   </lv-card-container>
 </template>
 
@@ -23,7 +23,7 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      default: '简介'
+      default: '墓志铭'
     },
     detail: {
       type: String,
@@ -43,4 +43,5 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+</style>

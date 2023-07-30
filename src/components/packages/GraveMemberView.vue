@@ -1,65 +1,72 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 <template>
   <div class="lv-banner-container">
-    <div class="banner-left">
-      <div class="familt-cover">
-        <van-image
-          width="100%"
-          height="100%"
-          :src="imgUrlParser(avatar)"
-        />
+    <div class="member_container">
+      <div class="member_item" v-for="(item, index) in memberList" :key="index">
+        <div class="member_item_left">
+          <div class="familt-cover">
+            <van-image width="100%" height="100%" :src="imgUrlParser(item.avatar)" />
+          </div>
+        </div>
+        <div class="member_item_right">
+          <div class="member_name">{{ item.name }}</div>
+          <div class="member_msg">
+            <label>生於:</label>
+            {{ item.birth_time || "-" }}
+          </div>
+          <div class="member_msg">
+            <label>殁於:</label>
+            {{ item.die_time || "-" }}
+          </div>
+          <!-- <div class="member_desc ">
+            <div class="desc_name">简介:</div>
+            <div class="desc_content">{{ dataInfo.desc || "-" }}</div>
+          </div> -->
+        </div>
       </div>
+      <div class="background"></div>
     </div>
-    <div class="banner-right">
-      <div class="family-title">{{ name }}</div>
-      <!-- <div class="family-address">地址：{{ dataInfo.address }}</div>
-      <div class="family-info">
-        <span class="info-title">简介：</span>
-        <span class="info-content">{{ dataInfo.info }}</span>
-      </div> -->
-    </div>
-    <!-- <div class="lv-banner-btn">
-      <van-button round type="warning" size="mini" @click="enterTree"
-        >进入族谱</van-button
-      >
-    </div> -->
-    <div class="background"></div>
+
+    <div v-if="showRelation" class="lv-banner-btn" @click="entry">查 看 子 女 关 系</div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import api from '@/api'
 import { lvDataParser, imgUrlParser } from '@/utils/Parser'
 export default defineComponent({
   name: 'GraveMemberView',
   data () {
     return {
-      dataInfo: {
-        title: '',
-        address: '',
-        info: '',
-        img: ''
-      },
+      code: this.$route.params.code,
+      memberList: [],
       imgUrlParser: imgUrlParser
     }
   },
   props: {
-    avatar: {
-      type: String,
-      default: ''
+    includeMate: {
+      default: 0
     },
-    name: {
-      type: String,
-      default: ''
+    showRelation: {
+      default: 1
     }
   },
   async created () {
-    // this.dataInfo = await lvDataParser(this.dataInfo, this.prop)
-    // console.log(this.dataInfo)
+    this.getMasterInfo()
   },
   methods: {
-    enterTree () {
-      this.$router.push({ name: 'familySvg' })
+    async getMasterInfo () {
+      const res = await api.getMasterInfo({
+        code: this.code
+      })
+      this.memberList = [res]
+      if (this.includeMate && res.mate) {
+        this.memberList.push(res.mate)
+      }
+    },
+    entry () {
+      this.$router.push({ name: 'memberTree' })
     }
   }
 })
@@ -69,73 +76,100 @@ export default defineComponent({
 .lv-banner-container {
   position: relative;
   z-index: 1;
-  height: 110px;
-  padding: 16px 10px 10px;
-  display: flex;
+  // padding: 10px 10px 0;
   background: #ffffff2e;
-  .banner-left {
-    height: 100%;
-    width: 95px;
-    .familt-cover {
-      width: 80px;
-      height: 103px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-  .banner-right {
-    flex: 1;
-    .family-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: #000;
-      margin-bottom: 10px;
-    }
-    .family-address {
-      font-size: 14px;
-      color: #969799;
-      margin-bottom: 5px;
-    }
-    .family-info {
-      font-size: 14px;
-      color: #969799;
-      margin-bottom: 5px;
-      display: flex;
-      .info-title {
-        display: inline-block;
-        // width: 46px;
-      }
-      .info-content {
-        flex: 1;
-      }
-    }
-  }
-  .lv-banner-btn {
-    position: absolute;
-    bottom: 6px;
-    right: 20px;
+  overflow: hidden;
 
-    .van-button {
-      width: 100px;
-      height: 26px;
-      font-size: 14px;
+  .member_container {
+    position: relative;
+
+    .member_item {
+      padding: 0 10px 10px;
+      display: flex;
+      height: 120px;
+      overflow: hidden;
+      &:first-child  {
+        padding-top: 10px;
+      }
+
+      .member_item_left {
+        padding: 0 10px;
+
+        .familt-cover {
+          width: 90px;
+          height: 120px;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+
+      .member_item_right {
+        flex: 1;
+        padding: 10px;
+
+        .member_name {
+          font-size: 16px;
+          font-weight: 500;
+          color: #000;
+          margin-bottom: 15px;
+        }
+
+        .member_msg {
+          font-size: 14px;
+          color: #606266;
+          margin-bottom: 10px;
+        }
+
+        .member_desc {
+          display: flex;
+          width: 100%;
+          font-size: 14px;
+          color: #606266;
+          margin-bottom: 5px;
+
+          .desc_name {
+            width: 35px;
+          }
+
+          .desc_content {
+            flex: 1;
+            white-space: pre-wrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+        }
+      }
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: -10;
+      background: url("~@/assets/background.png") no-repeat transparent;
+      background-size: 100% 100%;
+      opacity: 0.7;
     }
   }
-  .background {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -10;
-    background: url("~@/assets/background.png") no-repeat transparent;
-    background-size: 100% 100%;
-    opacity: 0.7;
+
+  .lv-banner-btn {
+    margin: 10px 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    background: #ff976a;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
   }
-}
-</style>
+}</style>
