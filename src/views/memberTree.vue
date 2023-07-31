@@ -134,7 +134,11 @@ export default defineComponent({
         // 节点点击事件
         nodeClickEvent: (e, d, isMeta) => {
           console.log('当前节点的数据：', d, e)
-          this.handleClick(d.data, isMeta)
+          let data = d.data
+          if (isMeta) {
+            data = d.data.mate
+          }
+          this.handleClick(data, isMeta)
         }
       })
       this.$setLoading(false)
@@ -144,17 +148,20 @@ export default defineComponent({
       // })
     },
     async handleClick (item, type) {
-      const itemDetail = await api.getMemberDetail({
-        id: type ? item.mateInfo.id : item.id,
-        child: true,
-        mate: true
-      })
-      const currentItem = {
-        ...itemDetail,
-        mate: itemDetail.mateInfo ? itemDetail.mateInfo.name : '',
-        children: itemDetail.children.map(item => item.name).join()
+      let apiUrl = 'getMemberDetail'
+      if (type) {
+        apiUrl = 'getMateDetail'
       }
-      this.setMemberDetail(currentItem)
+      const itemDetail = await api[apiUrl]({
+        code: this.code,
+        id: item.id
+      })
+      // const currentItem = {
+      //   ...item,
+      //   mateName: item.mateInfo ? itemDetail.mateInfo.name : '',
+      //   children: itemDetail.children.map(item => item.name).join()
+      // }
+      this.setMemberDetail(itemDetail)
       this.setMemberDetailShow(true)
     },
 
@@ -213,29 +220,6 @@ export default defineComponent({
     text-anchor: middle;
     stroke-width: 0.6;
     fill: #000000;
-  }
-}
-
-.tree_tab_content {
-  height: 60vh;
-}
-
-.tree_tab_item {
-  font-size: 14px;
-  padding: 10px;
-  color: #969799;
-  margin-top: 30px;
-}
-
-.van-row {
-  line-height: 2;
-  margin-left: 20px;
-}
-
-.tree_tab_img {
-  img {
-    margin: 5px 0;
-    width: 100%;
   }
 }
 

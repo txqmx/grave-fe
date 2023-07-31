@@ -1,52 +1,49 @@
 <template>
-  <van-popup  v-model:show="dialogVisible" position="bottom" closeable round teleport="body">
-      <div class="tree_tab_content">
-        <div class="tree_tab_item">
+  <van-popup
+    v-model:show="dialogVisible"
+    position="bottom"
+    closeable
+    round
+    teleport="body"
+  >
+    <div class="member_container">
+      <div class="member_content">
+        <div class="member_base_info">
           <van-row>
             <van-col span="12">名字: {{ currentItem.name }}</van-col>
-            <van-col span="12">性别: {{ currentItem.sex === 1 ? "女" : "男" }}</van-col>
+            <van-col span="12"
+              >性别: {{ currentItem.sex === 1 ? "男" : "女" }}</van-col
+            >
           </van-row>
           <van-row>
-            <van-col span="12">世数: {{ currentItem.level }}世</van-col>
-            <van-col span="12">排行: </van-col>
+            <van-col span="12"
+              >生年: {{ currentItem.birth_time || "-" }}</van-col
+            >
+            <van-col v-if="currentItem.is_die" span="12"
+              >卒年: {{ currentItem.die_time || "-" }}</van-col
+            >
           </van-row>
           <van-row>
-            <van-col span="12">生年: {{ this.dateFormat(currentItem.birthDate) }}</van-col>
-            <van-col v-if="currentItem.dieDate" span="12">卒年: {{ this.dateFormat(currentItem.dieDate) }}</van-col>
-          </van-row>
-          <van-row v-if="currentItem.mate">
-            <van-col span="12"> 配偶: {{ currentItem.mate }} </van-col>
-            <!-- <van-col span="12">父名: </van-col> -->
-          </van-row>
-          <van-row>
-            <van-col span="24"> 子女: {{ currentItem.children }} </van-col>
-          </van-row>
-          <van-row>
-            <van-col span="24">现居地: 中国</van-col>
+            <van-col span="24">籍贯: {{ currentItem.native || "-" }}</van-col>
           </van-row>
         </div>
-        <div class="tree_tab_img">
-          <!-- <img src="@/assets/1.png">
-                <img src="@/assets/2.png"> -->
-          <!-- <img v-if="currentItem.detail_img" :src="currentItem.detail_img" />
-          <img v-else src="@/assets/3.png" /> -->
-          <div v-html="currentItem.detail">
-
-          </div>
+        <div v-if="currentItem.desc" class="member_desc">
+          {{ currentItem.desc  }}
         </div>
+        <div class="html_content" v-html="currentItem.detail"></div>
       </div>
-    </van-popup>
+    </div>
+  </van-popup>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapMutations } from 'vuex'
 export default defineComponent({
-  components: { },
+  components: {},
   name: 'MemberDetail',
   data () {
-    return {
-    }
+    return {}
   },
   computed: {
     dialogVisible: {
@@ -83,26 +80,52 @@ export default defineComponent({
       this.setMemberDetailShow(false)
     },
     dateFormat (date) {
-      if (!date) { return '-' }
+      if (!date) {
+        return '-'
+      }
       const newDate = new Date(date)
       var Y = newDate.getFullYear() + '-'
-      var M = (newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1) + '-'
-      var D = (newDate.getDate() < 10 ? '0' + newDate.getDate() : newDate.getDate()) + ' '
+      var M =
+        (newDate.getMonth() + 1 < 10
+          ? '0' + (newDate.getMonth() + 1)
+          : newDate.getMonth() + 1) + '-'
+      var D =
+        (newDate.getDate() < 10 ? '0' + newDate.getDate() : newDate.getDate()) +
+        ' '
       return Y + M + D
     }
   }
-
 })
 </script>
 
 <style scoped lang="less">
-.home{
-  overflow: auto;
-  height: calc(100% - 46px);
-  padding-bottom: 20px;
-  & > div{
-    margin-bottom: 16px;
+.member_container {
+  height: 60vh;
+  padding: 50px 15px 30px 15px;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 2;
+  color: #6b7166;
+  .member_content {
+    padding-top: 10px;
+    height: 100%;
+    overflow: auto;
+    .member_base_info {
+      padding: 0 10px;
+      margin-bottom: 15px;
+      .van-row {
+        margin-bottom: 5px;
+      }
+    }
+    .member_desc{
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fcf7efb6;
+    }
+    .html_content{
+      padding: 0 10px;
+    }
   }
 }
-
 </style>

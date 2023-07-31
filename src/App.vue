@@ -1,10 +1,10 @@
 <template>
-  <!-- <member-detail></member-detail> -->
+  <member-detail></member-detail>
   <!-- loading -->
   <lv-loading />
 
   <!-- 图片查看器 -->
-  <!-- <img-preview v-if="state.imgPreviewShow"></img-preview> -->
+  <img-preview v-if="state.imgPreviewShow"></img-preview>
 
   <layout>
     <router-view v-slot="{ Component, route }">
@@ -21,8 +21,8 @@
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-// import MemberDetail from '@/components/MemberDetail.vue'
-// import ImgPreview from '@/components/base/ImgPreview.vue'
+import MemberDetail from '@/components/MemberDetail.vue'
+import ImgPreview from '@/components/base/ImgPreview.vue'
 import LvLoading from '@/components/base/LvLoading.vue'
 import Layout from '@/components/layout/Layout.vue'
 export default defineComponent({
@@ -50,8 +50,7 @@ export default defineComponent({
       onClickLeft
     }
   },
-  components: { Layout, LvLoading }
-  // components: { MemberDetail, ImgPreview, LvLoading, Layout }
+  components: { MemberDetail, ImgPreview, LvLoading, Layout }
 })
 </script>
 <style lang="less"></style>

@@ -74,7 +74,7 @@ export default defineComponent({
   padding: 12px 16px;
 
   .lv-card_title {
-    font-size: 16px;
+    font-size: 17px;
     color: #323233;
     display: flex;
     justify-content: space-between;
@@ -91,9 +91,9 @@ export default defineComponent({
   .lv-card_content {
     // padding: 10px 4px;
     // margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 15px;
     color: #6b7166;
-    line-height: 1.8;
+    line-height: 2;
     overflow: hidden;
   }
 

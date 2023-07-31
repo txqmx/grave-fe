@@ -5,11 +5,14 @@
       <div class="member_item" v-for="(item, index) in memberList" :key="index">
         <div class="member_item_left">
           <div class="familt-cover">
-            <van-image width="100%" height="100%" :src="imgUrlParser(item.avatar)" />
+            <van-image width="100%" height="100%" :src="getAvatar(item)" />
           </div>
         </div>
         <div class="member_item_right">
-          <div class="member_name">{{ item.name }}</div>
+          <div class="member_name">
+            {{ item.identity }}
+            {{ item.name }}
+          </div>
           <div class="member_msg">
             <label>生於:</label>
             {{ item.birth_time || "-" }}
@@ -65,6 +68,18 @@ export default defineComponent({
         this.memberList.push(res.mate)
       }
     },
+    getAvatar (item) {
+      let avatar = ''
+      if (!item.avatar) {
+        avatar =
+            item.sex === 1
+              ? require('@/assets/111.jpeg')
+              : require('@/assets/222.jpeg')
+      } else {
+        avatar = imgUrlParser(item.avatar)
+      }
+      return avatar
+    },
     entry () {
       this.$router.push({ name: 'memberTree' })
     }
@@ -111,14 +126,14 @@ export default defineComponent({
         padding: 10px;
 
         .member_name {
-          font-size: 16px;
+          font-size: 17px;
           font-weight: 500;
           color: #000;
           margin-bottom: 15px;
         }
 
         .member_msg {
-          font-size: 14px;
+          font-size: 15px;
           color: #606266;
           margin-bottom: 10px;
         }

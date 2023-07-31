@@ -16,9 +16,6 @@ export default defineComponent({
   name: 'GraveImgSwiper',
   data () {
     return {
-      dataInfo: {
-        imgs: []
-      },
       imgUrlParser: imgUrlParser
     }
   },
@@ -27,9 +24,6 @@ export default defineComponent({
       type: Array,
       default: () => []
     }
-  },
-  async created () {
-    // this.dataInfo = await lvDataParser(this.dataInfo, this.prop)
   }
 })
 </script>

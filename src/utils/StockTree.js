@@ -41,7 +41,7 @@ export class StockTree {
     this.rootOfDown = null
 
     this.drawChart({
-      type: 'fold'
+      type: 'all' // 默认全展开
     })
   }
 
@@ -88,7 +88,7 @@ export class StockTree {
           return `translate(${e.transform.x},${e.transform.y}) scale(${e.transform.k})`
         })
       })
-    zoom.transform(svg, d3.zoomIdentity.translate(0, 0).scale(1))
+    zoom.transform(svg, d3.zoomIdentity.translate(0, 12).scale(1))
     svg.call(
       zoom
     ).on('dblclick.zoom', null)// 取消默认的双击放大事件
@@ -122,9 +122,10 @@ export class StockTree {
           node.children = node._children
         } else if (options.type === 'fold') { // 如果是fold则表示除了父节点全都折叠
           // 将非根节点的节点都隐藏掉（其实对于这个组件来说加不加都一样）
-          if (node.depth > 2) {
-            node.children = null
-          }
+          node.children = null
+          // if (node.depth > 1) {
+          //   node.children = null
+          // }
         }
       })
     })

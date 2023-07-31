@@ -3,7 +3,7 @@
     <van-nav-bar
       class="vav-bar"
       title="宗信堂"
-      left-arrow
+      :left-arrow="routeName !=='Home'"
       @click-left="onClickLeft"
     >
       <template #right>
