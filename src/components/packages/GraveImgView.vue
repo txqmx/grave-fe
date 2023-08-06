@@ -1,5 +1,5 @@
 <template>
-  <div class="img_container">
+  <div v-if="img" class="img_container">
     <van-image width="100%" height="100%" :src="imgUrlParser(img)" fit="fill"/>
   </div>
 

@@ -1,11 +1,21 @@
 <template>
   <div class="lv-swiper-container">
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+    <van-swipe
+      v-if="imgs.length"
+      class="my-swipe"
+      :autoplay="3000"
+      indicator-color="white"
+    >
       <van-swipe-item v-for="(item, index) in imgs" :key="index">
-        <van-image width="100%" height="100%" :src="imgUrlParser(item)" fit="fill"/>
-        <!-- <img :src="imgUrlParser(item)" /> -->
+        <van-image
+          width="100%"
+          height="100%"
+          :src="imgUrlParser(item)"
+          fit="fill"
+        />
       </van-swipe-item>
     </van-swipe>
+    <van-image v-else width="100%" height="100%" src="" fit="fill" />
   </div>
 </template>
 
@@ -31,15 +41,16 @@ export default defineComponent({
 <style lang="less" scoped>
 .lv-swiper-container {
   position: relative;
-}
-
-.my-swipe {
   height: 190px;
   width: 100%;
-  .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    text-align: center;
+  .my-swipe {
+    height: 190px;
+    width: 100%;
+    .van-swipe-item {
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+    }
   }
 }
 </style>

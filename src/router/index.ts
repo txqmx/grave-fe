@@ -49,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/mobile'),
   routes
 })
 const setoRouteTransitionName = (to, from) => {
@@ -62,6 +62,7 @@ const setoRouteTransitionName = (to, from) => {
   } else {
     transitionName = 'border' // 同级无过渡效果
   }
+  console.log(transitionName)
   store.commit('setTransitionName', transitionName)
 }
 

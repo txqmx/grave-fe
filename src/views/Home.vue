@@ -14,9 +14,10 @@ import GraveEntryView from '@/components/packages/GraveEntryView.vue'
 import GraveImgSwiper from '@/components/packages/GraveImgSwiper.vue'
 import GraveImgView from '@/components/packages/GraveImgView.vue'
 import GraveDeatilView from '@/components/packages/GraveDeatilView.vue'
+import GraveAudioView from '@/components/packages/GraveAudioView.vue'
 import { mapMutations } from 'vuex'
 export default defineComponent({
-  components: { GraveMemberView, GraveEntryView, GraveImgSwiper, GraveDeatilView, GraveImgView },
+  components: { GraveMemberView, GraveEntryView, GraveImgSwiper, GraveDeatilView, GraveImgView, GraveAudioView },
   name: 'Home',
   data () {
     return {

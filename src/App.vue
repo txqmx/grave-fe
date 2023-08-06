@@ -6,6 +6,8 @@
   <!-- 图片查看器 -->
   <img-preview v-if="state.imgPreviewShow"></img-preview>
 
+  <!-- <lv-audio-view></lv-audio-view> -->
+
   <layout>
     <router-view v-slot="{ Component, route }">
       <transition :name="state.transitionName">
@@ -23,6 +25,7 @@ import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import MemberDetail from '@/components/MemberDetail.vue'
 import ImgPreview from '@/components/base/ImgPreview.vue'
+// import LvAudioView from '@/components/packages/GraveAudioView.vue'
 import LvLoading from '@/components/base/LvLoading.vue'
 import Layout from '@/components/layout/Layout.vue'
 export default defineComponent({

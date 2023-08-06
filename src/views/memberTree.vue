@@ -1,20 +1,37 @@
 <!-- eslint-disable semi -->
 <template>
-  <div id="treeSvg">
-    <div id="treeRoot"></div>
+  <div class="member_tree_container">
+    <div id="treeSvg">
+      <div id="treeRoot"></div>
+    </div>
+    <div v-if="tree" class="family_btn">
+      <!-- <van-button type="warning" size="small" @click="show = true">{{ fieldValue }}</van-button> -->
+      <van-button type="warning" size="small" @click="enlarge"
+        >全部展开</van-button
+      >
+      <van-button type="warning" size="small" @click="micrify"
+        >全部收起</van-button
+      >
+      <!-- <van-button v-if="!isRoot" type="warning" size="small" @click="goBackRoot">根节点</van-button> -->
+      <!-- <van-button type="warning" size="small" @click="search" icon="search"></van-button> -->
+    </div>
+    <search v-if="searchShow" @searchSubmit="searchSubmit"></search>
+    <van-popup
+      v-model:show="show"
+      round
+      position="bottom"
+      :close-on-click-overlay="false"
+    >
+      <van-cascader
+        v-model="cascaderValue"
+        title="请选择"
+        :options="options"
+        @close="close"
+        @change="onChange"
+        @finish="onFinish"
+      />
+    </van-popup>
   </div>
-  <div v-if="tree" class="family_btn">
-    <!-- <van-button type="warning" size="small" @click="show = true">{{ fieldValue }}</van-button> -->
-    <van-button type="warning" size="small" @click="enlarge">全部展开</van-button>
-    <van-button type="warning" size="small" @click="micrify">全部收起</van-button>
-    <!-- <van-button v-if="!isRoot" type="warning" size="small" @click="goBackRoot">根节点</van-button> -->
-    <!-- <van-button type="warning" size="small" @click="search" icon="search"></van-button> -->
-  </div>
-  <search v-if="searchShow" @searchSubmit="searchSubmit"></search>
-  <van-popup v-model:show="show" round position="bottom" :close-on-click-overlay="false">
-    <van-cascader v-model="cascaderValue" title="请选择" :options="options" @close="close" @change="onChange"
-      @finish="onFinish" />
-  </van-popup>
 </template>
 
 <script lang="ts">
@@ -65,7 +82,11 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapMutations(['setSearchState', 'setMemberDetailShow', 'setMemberDetail']),
+    ...mapMutations([
+      'setSearchState',
+      'setMemberDetailShow',
+      'setMemberDetail'
+    ]),
     close (e) {
       this.show = false
       if (!e) {
@@ -106,7 +127,9 @@ export default defineComponent({
           { text: row.name, value: row.id, parentId: row.parentId }
         ]
         if (this.cascaderValue.length === 2) {
-          this.fieldValue = this.cascaderValue.map((option) => option.text).join('/')
+          this.fieldValue = this.cascaderValue
+            .map((option) => option.text)
+            .join('/')
         }
       } else {
         const root = await api.getMemberList({
@@ -176,14 +199,16 @@ export default defineComponent({
         // genealogyId: 1,
         level: row.value
       })
-      const optionItem = this.options.find(item => item.value === row.value)
-      optionItem.children = list.filter(item => !item.isMate).map(item => {
-        return {
-          text: item.name,
-          value: item.id,
-          ...item
-        }
-      })
+      const optionItem = this.options.find((item) => item.value === row.value)
+      optionItem.children = list
+        .filter((item) => !item.isMate)
+        .map((item) => {
+          return {
+            text: item.name,
+            value: item.id,
+            ...item
+          }
+        })
     },
     onFinish ({ selectedOptions }) {
       this.getTreeData(selectedOptions[1])
@@ -193,18 +218,19 @@ export default defineComponent({
     search () {
       this.$store.commit('setSearchState', true)
     }
-
   },
   components: { Search }
 })
 </script>
 
 <style lang="less">
-#treeSvg {
+.member_tree_container{
+  height: 100%;
+  #treeSvg {
   overflow: hidden;
   height: calc(100% - 60px);
   width: 100%;
-  margin-top: 5px;
+  // margin-top: 5px;
 
   .identity-msg {
     stroke: #fff;
@@ -238,4 +264,6 @@ export default defineComponent({
     margin: 0 3px;
   }
 }
+}
+
 </style>
