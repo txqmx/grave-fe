@@ -2,7 +2,7 @@
   <div class="layout-cantainer">
     <van-nav-bar
       class="vav-bar"
-      title="宗信堂"
+      title="铭志码"
       :left-arrow="routeName !=='Home'"
       @click-left="onClickLeft"
     >

@@ -49,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/mobile'),
+  history: createWebHistory('/v1'),
   routes
 })
 const setoRouteTransitionName = (to, from) => {

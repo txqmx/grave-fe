@@ -1,5 +1,5 @@
 <template>
-  <div class="lv-audio-container">
+  <div v-if="audioUrl" class="lv-audio-container">
     <div :class="['music_btn',status === 'play'? 'rotate': '']" @click="handleClick"></div>
     <div id="lv-audio"></div>
   </div>
@@ -20,18 +20,20 @@ export default defineComponent({
     }
   },
   props: {
-    source: {
-      default: 'http://music.reborndata.com/music/201712/20171212/201712121741057328.mp3'
+    audioUrl: {
+      default: ''
     }
   },
   mounted () {
-    this.init()
+    if (this.audioUrl) {
+      this.init()
+    }
   },
   methods: {
     init () {
       this.music = new Music({
         id: 'lv-audio',
-        url: [{ src: 'http://music.reborndata.com/music/201712/20171212/201712121741057328.mp3', name: '' }],
+        url: [{ src: imgUrlParser(this.audioUrl), name: '' }],
         mode: 'loop',
         status: 'off',
         controls: true,

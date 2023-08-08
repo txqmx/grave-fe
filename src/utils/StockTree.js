@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as d3 from 'd3'
 import { imgUrlParser } from '@/utils/Parser'
+
 export class StockTree {
   constructor (options) {
     // 树的源数据
