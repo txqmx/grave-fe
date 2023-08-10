@@ -10,9 +10,11 @@
     <van-divider />
     <div>
       <div class="lv-card_content" :style="{ height: minHeight }">
-        <slot></slot>
+        <div ref="detail_content">
+          <slot></slot>
+        </div>
       </div>
-      <div v-if="isExpanded" class="lv-text_more" @click="showMore">
+      <div v-if="isOverHeight" class="lv-text_more" @click="showMore">
         <!-- <van-icon v-if="expanded" name="arrow-up" /> -->
         <!-- <van-icon v-else name="arrow-down" /> -->
         <img src="../../assets/moreup.png" v-if="expanded" name="arrow-up" class="more-style" />
@@ -28,7 +30,8 @@ export default defineComponent({
   name: 'LvCardContainer',
   data () {
     return {
-      expanded: false
+      expanded: false,
+      contentHeight: 0
     }
   },
   props: {
@@ -43,14 +46,15 @@ export default defineComponent({
     }
   },
   mounted () {
-    if (this.isExpanded) {
-      this.minHeight = '200px'
-    }
+    this.contentHeight = this.$refs.detail_content.clientHeight
   },
   computed: {
+    isOverHeight () {
+      return this.isExpanded && this.contentHeight > 300
+    },
     minHeight () {
-      if (this.isExpanded) {
-        return this.expanded ? '' : '200px'
+      if (this.isOverHeight) {
+        return this.expanded ? '' : '300px'
       } else {
         return ''
       }

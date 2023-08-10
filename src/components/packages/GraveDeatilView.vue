@@ -1,5 +1,5 @@
 <template>
-  <lv-card-container :title="title" @more="entryMore" :isExpanded="false" :isMore="false">
+  <lv-card-container :title="title" @more="entryMore" :isExpanded="true" :isMore="false">
     <div class="html_content" v-html="detail"></div>
   </lv-card-container>
 </template>

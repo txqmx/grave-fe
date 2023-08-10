@@ -1,7 +1,6 @@
 <template>
-  <div class="lv-swiper-container">
+  <div v-if="imgs && imgs.length" class="lv-swiper-container">
     <van-swipe
-      v-if="imgs.length"
       class="my-swipe"
       :autoplay="3000"
       indicator-color="white"
@@ -15,7 +14,6 @@
         />
       </van-swipe-item>
     </van-swipe>
-    <van-image v-else width="100%" height="100%" src="" fit="fill" />
   </div>
 </template>
 

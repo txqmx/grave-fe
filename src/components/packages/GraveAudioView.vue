@@ -1,6 +1,9 @@
 <template>
   <div v-if="audioUrl" class="lv-audio-container">
-    <div :class="['music_btn',status === 'play'? 'rotate': '']" @click="handleClick"></div>
+    <div
+      :class="['music_btn', status === 'play' ? 'rotate' : '']"
+      @click="handleClick"
+    ></div>
     <div id="lv-audio"></div>
   </div>
 </template>
@@ -10,13 +13,13 @@ import { defineComponent } from 'vue'
 import 'xgplayer'
 import Music from 'xgplayer-music'
 import { imgUrlParser } from '@/utils/Parser'
+import { overPlay } from '@/utils/MediaControl'
 export default defineComponent({
   name: 'LvAudioView',
   data () {
     return {
       music: null,
       status: 'pause'
-
     }
   },
   props: {
@@ -29,18 +32,32 @@ export default defineComponent({
       this.init()
     }
   },
+  computed: {
+    sourceUrl () {
+      return imgUrlParser(this.audioUrl)
+    }
+  },
   methods: {
     init () {
       this.music = new Music({
         id: 'lv-audio',
-        url: [{ src: imgUrlParser(this.audioUrl), name: '' }],
+        url: [{ src: this.sourceUrl, name: '' }],
         mode: 'loop',
         status: 'off',
         controls: true,
-        ignores: ['next', 'forward', 'backward', 'prev', 'cover', 'name', 'time']
+        ignores: [
+          'next',
+          'forward',
+          'backward',
+          'prev',
+          'cover',
+          'name',
+          'time'
+        ]
       })
       this.music.on('play', () => {
         console.log('play')
+        overPlay(this.sourceUrl)
         this.status = 'play'
       })
       this.music.on('pause', () => {
@@ -81,7 +98,7 @@ export default defineComponent({
   right: 10px;
   z-index: 1000;
   overflow: hidden;
-  .music_btn{
+  .music_btn {
     width: 36px;
     height: 36px;
     background: url("~@/assets/musicBtn.png") no-repeat transparent;
