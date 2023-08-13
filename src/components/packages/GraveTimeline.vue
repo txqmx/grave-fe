@@ -21,23 +21,16 @@ export default defineComponent({
   name: 'GraveTimeline',
   data () {
     return {
-      timeList: [
-        {
-          timestamp: '2018/4/12',
-          content: 'xxxx'
-        },
-        {
-          timestamp: '2018/4/12',
-          content: 'xxxx'
-        }
-      ]
+      timeList: []
     }
   },
   props: {
-    imgs: {
-      type: Array,
-      default: () => []
+    timeline: {
+      default: ''
     }
+  },
+  created () {
+    this.timeList = this.timeline ? JSON.parse(this.timeline) : []
   }
 })
 </script>
@@ -45,7 +38,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .lv-timeline-container {
   position: relative;
-  height: 190px;
+  padding: 10px 0;
   width: 100%;
 }
 </style>

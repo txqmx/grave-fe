@@ -4,8 +4,9 @@
     <div class="member_container">
       <div class="member_item" v-for="(item, index) in memberList" :key="index">
         <div class="member_item_left">
-          <div class="familt-cover">
+          <div class="familt-cover" @click="getDetail(item)">
             <van-image width="100%" height="100%" :src="getAvatar(item)" />
+            <div class="msg">查看详情</div>
           </div>
         </div>
         <div class="member_item_right">
@@ -37,6 +38,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import api from '@/api'
+import { mapMutations } from 'vuex'
 import { lvDataParser, imgUrlParser } from '@/utils/Parser'
 export default defineComponent({
   name: 'GraveMemberView',
@@ -59,13 +61,20 @@ export default defineComponent({
     this.getMasterInfo()
   },
   methods: {
+    ...mapMutations([
+      'setMemberDetailShow',
+      'setMemberDetail'
+    ]),
     async getMasterInfo () {
       const res = await api.getMasterInfo({
         code: this.code
       })
       this.memberList = [res]
       if (this.includeMate && res.mate) {
-        this.memberList.push(res.mate)
+        this.memberList.push({
+          ...res.mate,
+          isMate: true
+        })
       }
     },
     getAvatar (item) {
@@ -82,6 +91,18 @@ export default defineComponent({
     },
     entry () {
       this.$router.push({ name: 'memberTree' })
+    },
+    async getDetail (item) {
+      let apiUrl = 'getMemberDetail'
+      if (item.isMate) {
+        apiUrl = 'getMateDetail'
+      }
+      const itemDetail = await api[apiUrl]({
+        code: this.code,
+        id: item.id
+      })
+      this.setMemberDetail(itemDetail)
+      this.setMemberDetailShow(true)
     }
   }
 })
@@ -113,11 +134,24 @@ export default defineComponent({
         .familt-cover {
           width: 90px;
           height: 120px;
+          position: relative;
 
           img {
             width: 100%;
             height: 100%;
           }
+          .msg {
+          font-size: 14px;
+          display: inline-block;
+          position: absolute;
+          text-align: center;
+          width: 100%;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          color: #fff;
+          background: rgba(22, 20, 20, 0.19);
+        }
         }
       }
 

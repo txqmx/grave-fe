@@ -39,10 +39,10 @@ export default defineComponent({
 <style lang="less" scoped>
 .lv-swiper-container {
   position: relative;
-  height: 190px;
+  height: 180px;
   width: 100%;
   .my-swipe {
-    height: 190px;
+    height: 180px;
     width: 100%;
     .van-swipe-item {
       color: #fff;

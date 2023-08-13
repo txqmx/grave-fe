@@ -70,7 +70,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .el-timeline-item {
   position: relative;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 
   .el-timeline-item__tail {
     position: absolute;
@@ -102,7 +102,7 @@ export default defineComponent({
     .el-timeline-item__timestamp {
         color: #909399;
         line-height: 1;
-        font-size: 13px;
+        font-size: 15px;
     }
     .el-timeline-item__timestamp.is-top {
       margin-bottom: 8px;
@@ -115,7 +115,8 @@ export default defineComponent({
     }
 
     .el-timeline-item__content {
-      color: #303133;
+      padding: 4px 10px 4px 0;
+      color: #6B7166;
     }
   }
 }
