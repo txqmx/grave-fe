@@ -74,14 +74,14 @@ export default defineComponent({
 
   .el-timeline-item__tail {
     position: absolute;
-    left: 4px;
+    left: 6px;
     height: 100%;
-    border-left: 2px solid #e4e7ed;
+    border-left: 2px solid #c4c6cb;
   }
 
   .el-timeline-item__node {
     position: absolute;
-    background-color: #e4e7ed;
+    background-color: #c4c6cb;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -89,7 +89,7 @@ export default defineComponent({
   }
 
   .el-timeline-item__node--normal {
-    left: -1px;
+    left: 1px;
     width: 12px;
     height: 12px;
   }
@@ -100,9 +100,11 @@ export default defineComponent({
     top: -3px;
 
     .el-timeline-item__timestamp {
-        color: #909399;
+        color: #aeb0b3;
         line-height: 1;
-        font-size: 15px;
+        font-weight: bold;
+        font-size: 16px;
+        font-style: italic
     }
     .el-timeline-item__timestamp.is-top {
       margin-bottom: 8px;

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { resSuccess, reqSuccess, resError } from './interceptors'
 
 // import userTree from './userTree.json'
-const baseUrl = 'http://localhost:7001'
+const baseUrl = 'http://192.168.0.103:7001'
 // export const baseUrl = 'http://mingzhi.zongxintang.com'
 
 const request = axios.create({
@@ -33,6 +33,7 @@ export const axiosCus = {
 export default {
   axios: (dataSource) => axiosCus[dataSource.method](`${baseUrl}${dataSource.url}`, dataSource.data),
   login: (data) => axiosCus.post(`${baseUrl}/api/user/login`, data),
+  getGraveInfo: (data) => axiosCus.get(`${baseUrl}/api/home/getGraveInfo`, data),
   getHomeInfo: (data) => axiosCus.get(`${baseUrl}/api/home/getHomeInfo`, data),
   getMasterInfo: (data) => axiosCus.get(`${baseUrl}/api/home/getMasterInfo`, data),
   getMemberTree: (data) => axiosCus.get(`${baseUrl}/api/member/treeList`, data),

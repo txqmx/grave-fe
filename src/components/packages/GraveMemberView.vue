@@ -32,6 +32,7 @@
     </div>
 
     <div v-if="showRelation" class="lv-banner-btn" @click="entry">查 看 子 女 关 系</div>
+    <LoginGrave v-if="loginShow" :graveInfo="graveInfo" @close="loginCancel" @login="login"></LoginGrave>
   </div>
 </template>
 
@@ -40,13 +41,16 @@ import { defineComponent } from 'vue'
 import api from '@/api'
 import { mapMutations } from 'vuex'
 import { lvDataParser, imgUrlParser } from '@/utils/Parser'
+import LoginGrave from '../base/loginGrave.vue'
 export default defineComponent({
   name: 'GraveMemberView',
   data () {
     return {
       code: this.$route.params.code,
+      graveInfo: {},
       memberList: [],
-      imgUrlParser: imgUrlParser
+      imgUrlParser: imgUrlParser,
+      loginShow: false
     }
   },
   props: {
@@ -59,6 +63,7 @@ export default defineComponent({
   },
   async created () {
     this.getMasterInfo()
+    this.getGraveInfo()
   },
   methods: {
     ...mapMutations([
@@ -77,20 +82,27 @@ export default defineComponent({
         })
       }
     },
+    async getGraveInfo () {
+      const res = await api.getGraveInfo({
+        code: this.code
+      })
+      this.graveInfo = res
+    },
     getAvatar (item) {
       let avatar = ''
       if (!item.avatar) {
-        avatar =
-            item.sex === 1
-              ? require('@/assets/111.jpeg')
-              : require('@/assets/222.jpeg')
+        avatar = item.sex === 1 ? require('@/assets/111.jpeg') : require('@/assets/222.jpeg')
       } else {
         avatar = imgUrlParser(item.avatar)
       }
       return avatar
     },
     entry () {
-      this.$router.push({ name: 'memberTree' })
+      if (this.graveInfo.password) {
+        this.loginShow = true
+      } else {
+        this.$router.push({ name: 'memberTree' })
+      }
     },
     async getDetail (item) {
       let apiUrl = 'getMemberDetail'
@@ -103,8 +115,15 @@ export default defineComponent({
       })
       this.setMemberDetail(itemDetail)
       this.setMemberDetailShow(true)
+    },
+    login () {
+      this.$router.push({ name: 'memberTree' })
+    },
+    loginCancel () {
+      this.loginShow = false
     }
-  }
+  },
+  components: { LoginGrave }
 })
 </script>
 
